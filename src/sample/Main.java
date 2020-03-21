@@ -77,7 +77,7 @@ public class Main extends Application {
      */
     private void initData() {
         list = FileUtil.initData();
-        data2019 = ListUtil.getData2019(list);
+        data2019 = ListUtil.getListByYear(list,"2019");
     }
 
     /**
@@ -107,17 +107,18 @@ public class Main extends Application {
 
         //create columns
         TableColumn year = TableUtil.createColumn("Year", "year", 100);
-        TableColumn id = TableUtil.createColumn("Id", "id", 100);
+        TableColumn id = TableUtil.createColumn("Number", "id", 100);
         TableColumn station = TableUtil.createColumn("Station", "station", 200);
         TableColumn tmax = TableUtil.createColumn("Highest monthly maximum temperature", "tmax", 100);
         TableColumn tmin = TableUtil.createColumn("Lowest monthly maximum temperature", "tmin", 100);
         TableColumn frost = TableUtil.createColumn("Total air frost days", "af", 100);
         TableColumn rain = TableUtil.createColumn("Total rainfall", "rain", 100);
+        TableColumn notes = TableUtil.createColumn("Notes", "notes", 100);
 
         //table
         TableView<Weather> tableView = new TableView<>();
         tableView.setItems(data2019);
-        tableView.getColumns().addAll(year, id, station, tmax, tmin, frost, rain);
+        tableView.getColumns().addAll(year, id, station, tmax, tmin, frost, rain,notes);
 
         return tableView;
     }

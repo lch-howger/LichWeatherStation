@@ -23,7 +23,7 @@ public class FileUtil {
                 File file = files[i];
                 String name = FileUtil.getFileName(file);
                 ObservableList<Weather> weathers = readFile(file);
-                Station station = new Station(i, name, weathers);
+                Station station = new Station(i + 1, name, weathers);
                 list.add(station);
             }
         }

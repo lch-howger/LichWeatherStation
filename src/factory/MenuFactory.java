@@ -40,7 +40,13 @@ public class MenuFactory {
             });
         } else if (s.equals("About")) {
             menuItem.setOnAction(actionEvent -> {
-                AlertUtil.alert("hello world");
+                AlertUtil.alert("" +
+                        "year ---The year for the weather data\n" +
+                        "month ---The month for the weather data\n" +
+                        "tmax ---The mean maximum temperature in the month\n" +
+                        "tmin ---The mean minimum temperature in the month\n" +
+                        "af ---The number of days of air frost in the month\n" +
+                        "rain ---The total rainfall in the month");
             });
         }
         return menuItem;

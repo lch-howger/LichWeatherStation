@@ -9,6 +9,7 @@ public class Weather {
     private String tmin;
     private String af;
     private String rain;
+    private String notes;
 
     public Weather(String id, String station, String year, String month, String tmax, String tmin, String af, String rain) {
         this.id = id;
@@ -97,5 +98,13 @@ public class Weather {
 
     public void setRain(String rain) {
         this.rain = rain;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }
