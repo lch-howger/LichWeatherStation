@@ -10,12 +10,11 @@ import java.util.List;
 public class ListUtil {
 
     /**
-     *
      * @param list
      * @param name
      * @return
      */
-    public static ObservableList<Weather> getListByStation(List<Station> list,String name) {
+    public static ObservableList<Weather> getListByStation(List<Station> list, String name) {
         for (Station station : list) {
             if (station.getName().equals(name)) {
                 return station.getList();
@@ -25,7 +24,6 @@ public class ListUtil {
     }
 
     /**
-     *
      * @param list
      * @param year
      * @return
@@ -47,31 +45,48 @@ public class ListUtil {
      */
     public static Weather getWeatherDataByYear(Station station, String year) {
         ObservableList<Weather> list = filterByYear(station.getList(), year);
-        double totalTmax = 0;
-        double totalTmin = 0;
+        double tempTmax = 0;
+        double tempTmin = 0;
         int totalAirFrostDays = 0;
         double totalRainfall = 0;
-        for (Weather weather : list) {
-            totalTmax = totalTmax + ParseUtil.parseDouble(weather.getTmax());
-            totalTmin = totalTmin + ParseUtil.parseDouble(weather.getTmin());
-            totalAirFrostDays = totalAirFrostDays + ParseUtil.parseInt(weather.getAf());
-            totalRainfall = totalRainfall + ParseUtil.parseDouble(weather.getRain());
-        }
-        Weather weather = new Weather(
+        Weather w = new Weather(
                 StringUtil.toString(station.getId()),
                 StringUtil.toString(station.getId()),
                 station.getName(),
                 year,
                 "all",
-                StringUtil.toString(totalTmax),
-                StringUtil.toString(totalTmin),
+                StringUtil.toString(tempTmax),
+                StringUtil.toString(tempTmin),
                 StringUtil.toString(totalAirFrostDays),
                 StringUtil.toString(totalRainfall)
         );
         if (list.isEmpty()) {
-            weather.setNotes("Lack of data.");
+            w.setNotes("Lack of data.");
+            return w;
         }
-        return weather;
+
+        tempTmax = ParseUtil.parseDouble(list.get(0).getTmax());
+        tempTmin = ParseUtil.parseDouble(list.get(0).getTmin());
+
+        for (Weather weather : list) {
+            double tmax = ParseUtil.parseDouble(weather.getTmax());
+            if (tmax > tempTmax) {
+                tempTmax = tmax;
+            }
+            double tmin = ParseUtil.parseDouble(weather.getTmin());
+            if (tmin < tempTmin) {
+                tempTmin = tmin;
+            }
+            totalAirFrostDays = totalAirFrostDays + ParseUtil.parseInt(weather.getAf());
+            totalRainfall = totalRainfall + ParseUtil.parseDouble(weather.getRain());
+        }
+
+        w.setTmax(StringUtil.toString(tempTmax));
+        w.setTmin(StringUtil.toString(tempTmin));
+        w.setAf(StringUtil.toString(totalAirFrostDays));
+        w.setRain(StringUtil.toString(totalRainfall));
+
+        return w;
     }
 
     /**
