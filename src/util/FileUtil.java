@@ -2,7 +2,7 @@ package util;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Product;
+import model.Station;
 import model.Weather;
 
 import java.io.*;
@@ -14,16 +14,17 @@ public class FileUtil {
     /**
      * @return
      */
-    public static ObservableList<Weather> initData() {
-        ObservableList<Weather> list = FXCollections.observableArrayList();
+    public static List<Station> initData() {
+        List<Station> list = new ArrayList<>();
         File data = new File("data");
         if (data.exists() && !data.isFile()) {
             File[] files = data.listFiles();
-            for (File file : files) {
+            for (int i = 0; i < files.length; i++) {
+                File file = files[i];
+                String name = FileUtil.getFileName(file);
                 ObservableList<Weather> weathers = readFile(file);
-                if (weathers != null) {
-                    list.addAll(weathers);
-                }
+                Station station = new Station(i, name, weathers);
+                list.add(station);
             }
         }
 
@@ -35,10 +36,10 @@ public class FileUtil {
      * @return
      */
     private static ObservableList<Weather> readFile(File file) {
-        try {
-            //create weather list
-            ObservableList<Weather> list = FXCollections.observableArrayList();
+        //create weather list
+        ObservableList<Weather> list = FXCollections.observableArrayList();
 
+        try {
             //get file name from file
             String name = FileUtil.getFileName(file);
 
@@ -65,14 +66,13 @@ public class FileUtil {
             }
 
             reader.close();
-            return list;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return list;
     }
 
     /**

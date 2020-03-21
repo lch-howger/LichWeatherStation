@@ -2,15 +2,14 @@ package util;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Product;
 import model.Weather;
 
 public class TableUtil {
 
-    public static TableColumn createColumn(String name, int width) {
-        TableColumn<Weather, String> column = new TableColumn<>(name);
+    public static TableColumn createColumn(String columnName, String property, int width) {
+        TableColumn<Weather, String> column = new TableColumn<>(columnName);
         column.setMinWidth(width);
-        column.setCellValueFactory(new PropertyValueFactory<>(name));
+        column.setCellValueFactory(new PropertyValueFactory<>(property));
         return column;
     }
 }
