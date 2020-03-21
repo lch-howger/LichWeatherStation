@@ -1,5 +1,6 @@
 package factory;
 
+import constant.StringValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
@@ -18,8 +19,9 @@ public class MenuFactory {
             MenuItem delete = createMenuItem("Delete");
             menu.getItems().addAll(add, delete);
         } else if (s.equals("Help")) {
+            MenuItem help = createMenuItem("Help");
             MenuItem about = createMenuItem("About");
-            menu.getItems().addAll(about);
+            menu.getItems().addAll(help, about);
         }
         return menu;
     }
@@ -38,15 +40,13 @@ public class MenuFactory {
             menuItem.setOnAction(actionEvent -> {
                 AlertUtil.alert("hello world");
             });
+        } else if (s.equals("Help")) {
+            menuItem.setOnAction(actionEvent -> {
+                AlertUtil.alert(StringValue.MENU_HELP);
+            });
         } else if (s.equals("About")) {
             menuItem.setOnAction(actionEvent -> {
-                AlertUtil.alert("" +
-                        "year ---The year for the weather data\n" +
-                        "month ---The month for the weather data\n" +
-                        "tmax ---The mean maximum temperature in the month\n" +
-                        "tmin ---The mean minimum temperature in the month\n" +
-                        "af ---The number of days of air frost in the month\n" +
-                        "rain ---The total rainfall in the month");
+                AlertUtil.alert(StringValue.MENU_ABOUT);
             });
         }
         return menuItem;
