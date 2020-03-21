@@ -4,25 +4,19 @@ import factory.MenuFactory;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Station;
 import model.Weather;
-import util.AlertUtil;
 import util.FileUtil;
+import util.ImageUtil;
 import util.ListUtil;
 import util.TableUtil;
 
@@ -51,6 +45,7 @@ public class Main extends Application {
         //initialize stage
         primaryStage.setTitle("Weather Data");
         primaryStage.setScene(new Scene(layout, 1000, 600));
+        ImageUtil.setIcon(primaryStage);
         primaryStage.show();
     }
 
