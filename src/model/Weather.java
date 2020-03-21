@@ -2,6 +2,7 @@ package model;
 
 public class Weather {
     private String id;
+    private String number;
     private String station;
     private String year;
     private String month;
@@ -11,8 +12,9 @@ public class Weather {
     private String rain;
     private String notes;
 
-    public Weather(String id, String station, String year, String month, String tmax, String tmin, String af, String rain) {
+    public Weather(String id, String number, String station, String year, String month, String tmax, String tmin, String af, String rain) {
         this.id = id;
+        this.number = number;
         this.station = station;
         this.year = year;
         this.month = month;
@@ -42,6 +44,14 @@ public class Weather {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getStation() {

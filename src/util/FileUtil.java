@@ -54,6 +54,7 @@ public class FileUtil {
                     String id = name + "-" + count;
                     Weather weather = new Weather(
                             id,
+                            "" + count,
                             name,
                             split[0],
                             split[1],

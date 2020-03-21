@@ -12,4 +12,5 @@ public class TableUtil {
         column.setCellValueFactory(new PropertyValueFactory<>(property));
         return column;
     }
+
 }
