@@ -1,17 +1,20 @@
 package sample;
 
+import factory.MenuFactory;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Station;
 import model.Weather;
@@ -39,6 +42,7 @@ public class Main extends Application {
         //initialize layout
         BorderPane layout = initLayout();
 
+        //initialize stage
         primaryStage.setTitle("Weather Data");
         primaryStage.setScene(new Scene(layout, 1000, 600));
         primaryStage.show();
@@ -61,6 +65,10 @@ public class Main extends Application {
         TableView tableView = initTable();
         borderPane.setCenter(tableView);
 
+        //initialize table
+        VBox vBox = initVBox();
+        borderPane.setBottom(vBox);
+
         return borderPane;
     }
 
@@ -79,9 +87,9 @@ public class Main extends Application {
      */
     private MenuBar initMenu() {
         //create menus
-        Menu file = new Menu("File");
-        Menu edit = new Menu("Edit");
-        Menu help = new Menu("Help");
+        Menu file = MenuFactory.createMenu("File");
+        Menu edit = MenuFactory.createMenu("Edit");
+        Menu help = MenuFactory.createMenu("Help");
 
         //create menu bar
         MenuBar menuBar = new MenuBar();
@@ -114,4 +122,15 @@ public class Main extends Application {
         return tableView;
     }
 
+    private VBox initVBox() {
+        VBox vBox = new VBox();
+        HBox hBox = new HBox();
+        hBox.setPadding(new Insets(20, 20, 20, 20));
+
+        TableView tableView = initTable();
+        tableView.setMaxHeight(200);
+
+        vBox.getChildren().addAll(hBox, tableView);
+        return vBox;
+    }
 }
