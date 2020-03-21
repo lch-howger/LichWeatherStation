@@ -3,25 +3,12 @@ package util;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Station;
+import model.StatsData;
 import model.Weather;
 
 import java.util.List;
 
 public class ListUtil {
-
-    /**
-     * @param list
-     * @param name
-     * @return
-     */
-    public static ObservableList<Weather> getListByStation(List<Station> list, String name) {
-        for (Station station : list) {
-            if (station.getName().equals(name)) {
-                return station.getList();
-            }
-        }
-        return FXCollections.observableArrayList();
-    }
 
     /**
      * @param list
@@ -104,6 +91,20 @@ public class ListUtil {
             }
         }
         return data;
+    }
+
+    /**
+     * @param list
+     * @param name
+     * @return
+     */
+    public static Station filterByStation(List<Station> list, String name) {
+        for (Station station : list) {
+            if (station.getName().equals(name)) {
+                return station;
+            }
+        }
+        return null;
     }
 
     /**

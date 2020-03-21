@@ -1,11 +1,15 @@
 package sample;
 
 import factory.MenuFactory;
+import factory.TableFactory;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,10 +19,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Station;
 import model.Weather;
-import util.FileUtil;
-import util.ImageUtil;
-import util.ListUtil;
-import util.TableUtil;
+import util.*;
+import view.TableBox;
 
 import java.util.List;
 
@@ -27,7 +29,8 @@ public class Main extends Application {
     private List<Station> list;
     private ObservableList<Weather> data2019;
     private Label label;
-    private TableView tableView;
+    private TableView bottomTable;
+    private String selectedStation;
 
     public static void main(String[] args) {
         launch(args);
@@ -139,11 +142,15 @@ public class Main extends Application {
      * @param weather
      */
     private void selectItem(Weather weather) {
+        selectedStation = weather.getStation();
         if (label != null) {
-            label.setText("Station: " + weather.getStation());
+            label.setText("Station: " + selectedStation);
         }
-        if (tableView != null) {
-            tableView.setItems(ListUtil.getListByStation(list, weather.getStation()));
+        if (bottomTable != null) {
+            Station station = ListUtil.filterByStation(list, selectedStation);
+            if (station != null) {
+                bottomTable.setItems(station.getList());
+            }
         }
     }
 
@@ -156,16 +163,22 @@ public class Main extends Application {
         VBox vBox = new VBox();
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(10, 10, 10, 10));
+        hBox.setSpacing(20);
+        hBox.setAlignment(Pos.CENTER_LEFT);
 
         //create label
         label = new Label("");
-        hBox.getChildren().add(label);
+        Button button = new Button("More");
+        button.setOnAction(actionEvent -> {
+            new TableBox(list, selectedStation).display();
+        });
+        hBox.getChildren().addAll(label, button);
 
         //create table view
-        tableView = initBottomTable();
-        tableView.setMaxHeight(200);
+        bottomTable = initBottomTable();
+        bottomTable.setMaxHeight(200);
 
-        vBox.getChildren().addAll(hBox, tableView);
+        vBox.getChildren().addAll(hBox, bottomTable);
         return vBox;
     }
 
@@ -173,21 +186,7 @@ public class Main extends Application {
      * @return
      */
     private TableView initBottomTable() {
-
-        //create columns
-        TableColumn station = TableUtil.createColumn("Station", "station", 150);
-        TableColumn id = TableUtil.createColumn("Number", "number", 100);
-        TableColumn year = TableUtil.createColumn("Year", "year", 100);
-        TableColumn month = TableUtil.createColumn("Month", "month", 100);
-        TableColumn tmax = TableUtil.createColumn("Tmax (maximum temperature in the month)", "tmax", 100);
-        TableColumn tmin = TableUtil.createColumn("Tmin (minimum temperature in the month)", "tmin", 100);
-        TableColumn frost = TableUtil.createColumn("Af (days of air frost in the month)", "af", 100);
-        TableColumn rain = TableUtil.createColumn("Rain (total rainfall in the month)", "rain", 100);
-
-        //table
-        TableView<Weather> tableView = new TableView<>();
-        tableView.getColumns().addAll(station, id, year, month, tmax, tmin, frost, rain);
-
-        return tableView;
+        TableView table = TableFactory.createTable();
+        return table;
     }
 }
