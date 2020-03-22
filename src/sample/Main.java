@@ -16,12 +16,15 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import model.Station;
 import model.Weather;
 import util.*;
 import view.TableBox;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class Main extends Application {
@@ -31,6 +34,7 @@ public class Main extends Application {
     private Label label;
     private TableView bottomTable;
     private String selectedStation;
+    private Stage stage;
 
     public static void main(String[] args) {
         launch(args);
@@ -38,6 +42,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
 
         //initialize data
         initData();
@@ -97,6 +102,10 @@ public class Main extends Application {
         Menu file = MenuFactory.createMenu("File");
         Menu edit = MenuFactory.createMenu("Edit");
         Menu help = MenuFactory.createMenu("Help");
+
+        file.getItems().get(0).setOnAction(actionEvent -> {
+            handleReport();
+        });
 
         //create menu bar
         MenuBar menuBar = new MenuBar();
@@ -183,5 +192,20 @@ public class Main extends Application {
     private TableView initBottomTable() {
         TableView table = TableFactory.createTable();
         return table;
+    }
+
+    /**
+     *
+     */
+    private void handleReport() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(new File("src"));
+        File selectedDirectory = directoryChooser.showDialog(stage);
+        File file = new File(selectedDirectory.getAbsolutePath() + File.separator + "test.txt");
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
