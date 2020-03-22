@@ -201,9 +201,10 @@ public class Main extends Application {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File("src"));
         File selectedDirectory = directoryChooser.showDialog(stage);
-        File file = new File(selectedDirectory.getAbsolutePath() + File.separator + "test.txt");
+        File file = new File(selectedDirectory.getAbsolutePath() + File.separator + "WeatherDataReport.txt");
         try {
             file.createNewFile();
+            FileUtil.writeReport(file, list);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -56,6 +56,10 @@ public class StatsUtil {
         return data;
     }
 
+    /**
+     * @param map
+     * @return
+     */
     private static AnnualData getAnnualData(Map<String, ObservableList<Weather>> map) {
         int count = 0;
         int totalAf = 0;
@@ -83,6 +87,33 @@ public class StatsUtil {
         );
 
         return a;
+    }
+
+    public static String getStatsReport(List<Station> list) {
+        if (ListUtil.isEmpty(list)) {
+            return "";
+        }
+
+        String result = "";
+        for (Station station : list) {
+            StatsData data = getStatsData(station.getList());
+            if (data != null) {
+                result = result +
+                        "Number: " + station.getId() + "\n" +
+                        "Station: " + station.getName() + "\n" +
+                        "Highest: " + data.getMonthYearTmax() + "   " + data.getHighestTmax() + "\n" +
+                        "Lowest: " + data.getMonthYearTmin() + "   " + data.getLowestTmin() + "\n" +
+                        "Average annual af: " + data.getAverageAf() + "\n" +
+                        "Average annual rainfall: " + data.getAverageRain() + "\n\n";
+            } else {
+                result = result +
+                        "Number: " + station.getId() + "\n" +
+                        "Station: " + station.getName() + "\n" +
+                        "Notes: Lack of data." + "\n\n";
+            }
+        }
+
+        return result;
     }
 
 //    private static AnnualData getAnnualData(Map<String, ObservableList<Weather>> map) {

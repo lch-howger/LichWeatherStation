@@ -1,5 +1,6 @@
 package util;
 
+import javafx.beans.WeakInvalidationListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Station;
@@ -90,5 +91,21 @@ public class FileUtil {
             }
         }
         return "";
+    }
+
+    /**
+     *
+     * @param file
+     * @param list
+     */
+    public static void writeReport(File file, List<Station> list) {
+        try {
+            String report = StatsUtil.getStatsReport(list);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(report);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
