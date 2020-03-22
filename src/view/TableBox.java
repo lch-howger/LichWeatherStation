@@ -49,10 +49,10 @@ public class TableBox {
             label.setText("Station: " + station.getName() + "\n" +
                     "Highest Tmax: " + data.getMonthYearTmax() + "   " + data.getHighestTmax() + "\n" +
                     "Lowest Tmin: " + data.getMonthYearTmin() + "   " + data.getLowestTmin() + "\n" +
-                    "Total Af: " + data.getTotalAf() + "\n" +
-                    "Total Rain: " + data.getTotalRain() + "\n" +
-                    "Average Af: " + data.getAverageAf() + "\n" +
-                    "Average Rain: " + data.getAverageRain());
+                    //"Total Annual Af: " + data.getTotalAf() + "\n" +
+                    //"Total Annual Rain: " + data.getTotalRain() + "\n" +
+                    "Average Annual Af: " + data.getAverageAf() + "\n" +
+                    "Average Annual Rain: " + data.getAverageRain());
         }
 
         //create table

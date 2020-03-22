@@ -128,12 +128,7 @@ public class Main extends Application {
         tableView.getColumns().addAll(year, id, station, tmax, tmin, frost, rain, notes);
 
         //selected item
-        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Weather>() {
-            @Override
-            public void changed(ObservableValue<? extends Weather> observableValue, Weather oldWeather, Weather newWeather) {
-                selectItem(newWeather);
-            }
-        });
+        tableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldWeather, newWeather) -> selectItem(newWeather));
 
         return tableView;
     }

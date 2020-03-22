@@ -1,9 +1,15 @@
 package util;
 
 import javafx.collections.ObservableList;
+import model.AnnualData;
 import model.Station;
 import model.StatsData;
 import model.Weather;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class StatsUtil {
 
@@ -18,8 +24,6 @@ public class StatsUtil {
 
         double tempTmax = ParseUtil.parseDouble(list.get(0).getTmax());
         double tempTmin = ParseUtil.parseDouble(list.get(0).getTmin());
-        int totalAirFrostDays = 0;
-        double totalRainfall = 0;
         String monthYearTmax = "";
         String monthYearTmin = "";
 
@@ -34,23 +38,85 @@ public class StatsUtil {
                 tempTmin = tmin;
                 monthYearTmin = weather.getMonth() + "/" + weather.getYear();
             }
-            totalAirFrostDays = totalAirFrostDays + ParseUtil.parseInt(weather.getAf());
-            totalRainfall = totalRainfall + ParseUtil.parseDouble(weather.getRain());
         }
 
-        double averageAf = (double) totalAirFrostDays / (double) list.size();
-        double averageRain = totalRainfall / (double) list.size();
+        Map<String, ObservableList<Weather>> map = ListUtil.splitListByYear(list);
+        AnnualData a = getAnnualData(map);
 
         StatsData data = new StatsData(
                 StringUtil.toString(tempTmax),
                 StringUtil.toString(tempTmin),
-                StringUtil.toString(totalAirFrostDays),
-                StringUtil.toString(totalRainfall),
-                StringUtil.toString(averageAf),
-                StringUtil.toString(averageRain),
+                null,
+                null,
+                a.getAverageAf(),
+                a.getAverageRain(),
                 monthYearTmax,
                 monthYearTmin
         );
         return data;
     }
+
+    private static AnnualData getAnnualData(Map<String, ObservableList<Weather>> map) {
+        int count = 0;
+        int totalAf = 0;
+        double totalRain = 0;
+        double averageAf = 0;
+        double averageRain = 0;
+        for (ObservableList<Weather> list : map.values()) {
+            if (list.size() == 12) {
+                for (Weather weather : list) {
+                    totalAf += ParseUtil.parseInt(weather.getAf());
+                    totalRain += ParseUtil.parseDouble(weather.getRain());
+                }
+                count++;
+            }
+        }
+
+        if (count > 0) {
+            averageAf = (double) totalAf / (double) count;
+            averageRain = totalRain / (double) count;
+        }
+
+        AnnualData a = new AnnualData(
+                StringUtil.toString(averageAf),
+                StringUtil.toString(averageRain)
+        );
+
+        return a;
+    }
+
+//    private static AnnualData getAnnualData(Map<String, ObservableList<Weather>> map) {
+//        String totalAfStr = "";
+//        String totalRainStr = "";
+//        String AverageAfStr = "";
+//        String AverageRainStr = "";
+//        for (Map.Entry<String, ObservableList<Weather>> entry : map.entrySet()) {
+//            int totalAf = 0;
+//            double totalRain = 0;
+//            String year = entry.getKey();
+//            ObservableList<Weather> list = entry.getValue();
+//            for (Weather weather : list) {
+//                totalAf += ParseUtil.parseInt(weather.getAf());
+//                totalRain += ParseUtil.parseDouble(weather.getRain());
+//            }
+//
+//            double averageAf = (double) totalAf / (double) list.size();
+//            double averageRain = totalRain / (double) list.size();
+//
+//            totalAfStr += StringUtil.toString(totalAf) + "(" + year + ") ";
+//            totalRainStr += StringUtil.toString(totalRain) + "(" + year + ") ";
+//            AverageAfStr += StringUtil.toString(averageAf) + "(" + year + ") ";
+//            AverageRainStr += StringUtil.toString(averageRain) + "(" + year + ") ";
+//
+//        }
+//
+//        AnnualData a = new AnnualData(
+//                totalAfStr,
+//                totalRainStr,
+//                AverageAfStr,
+//                AverageRainStr
+//        );
+//
+//        return a;
+//    }
 }

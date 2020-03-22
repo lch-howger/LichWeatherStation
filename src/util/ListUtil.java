@@ -6,7 +6,9 @@ import model.Station;
 import model.StatsData;
 import model.Weather;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ListUtil {
 
@@ -105,6 +107,24 @@ public class ListUtil {
             }
         }
         return null;
+    }
+
+    /**
+     * @param weatherList
+     * @return
+     */
+    public static Map<String, ObservableList<Weather>> splitListByYear(ObservableList<Weather> weatherList) {
+        Map<String, ObservableList<Weather>> map = new HashMap<>();
+        for (Weather weather : weatherList) {
+            String year = weather.getYear();
+            ObservableList<Weather> list = map.get(year);
+            if (list == null) {
+                list = FXCollections.observableArrayList();
+            }
+            list.add(weather);
+            map.put(year, list);
+        }
+        return map;
     }
 
     /**
