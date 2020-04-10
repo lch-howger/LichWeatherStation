@@ -184,7 +184,12 @@ public class Main extends Application {
         label = new Label("");
         Button button = new Button("More");
         button.setOnAction(actionEvent -> {
-            new TableBox(list, selectedStation).display();
+            Station station = ListUtil.filterByStation(list, selectedStation);
+            if (ListUtil.isEmpty(station.getList())) {
+                AlertUtil.alert("Lack of data.");
+                return;
+            }
+            new TableBox(station).display();
         });
         hBox.getChildren().addAll(label, button);
 

@@ -24,16 +24,16 @@ public class TableBox {
     private Station station;
 
     /**
-     * @param list
-     * @param name
+     * constructor
+     *
+     * @param station
      */
-    public TableBox(List<Station> list, String name) {
-        //get weather data list by station
-        station = ListUtil.filterByStation(list, name);
+    public TableBox(Station station) {
+        this.station = station;
     }
 
     /**
-     *
+     * display the box
      */
     public void display() {
 
@@ -58,15 +58,15 @@ public class TableBox {
         //create button
         Button b1 = new Button("View Tmax and Tmin Chart");
         b1.setOnAction(actionEvent -> {
-            new ChartBox(station.getList(),"t").display();
+            new ChartBox(station.getList(), "t").display();
         });
         Button b2 = new Button("View Af Chart");
         b2.setOnAction(actionEvent -> {
-            new ChartBox(station.getList(),"af").display();
+            new ChartBox(station.getList(), "af").display();
         });
         Button b3 = new Button("View Rain Chart");
         b3.setOnAction(actionEvent -> {
-            new ChartBox(station.getList(),"rain").display();
+            new ChartBox(station.getList(), "rain").display();
         });
 
         //create hbox
