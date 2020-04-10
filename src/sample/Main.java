@@ -100,7 +100,7 @@ public class Main extends Application {
     private MenuBar initMenu() {
         //create menus
         Menu file = MenuFactory.createMenu("File");
-        Menu edit = MenuFactory.createMenu("Edit");
+        //Menu edit = MenuFactory.createMenu("Edit");
         Menu help = MenuFactory.createMenu("Help");
 
         file.getItems().get(0).setOnAction(actionEvent -> {
@@ -109,7 +109,7 @@ public class Main extends Application {
 
         //create menu bar
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(file, edit, help);
+        menuBar.getMenus().addAll(file, help);
 
         return menuBar;
     }

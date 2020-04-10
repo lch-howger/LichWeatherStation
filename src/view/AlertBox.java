@@ -21,7 +21,7 @@ public class AlertBox {
      */
     public void display(String message) {
         //create stage
-        Stage stage = new Stage();
+        Stage stage = new BaseStage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Alert");
         stage.setMinWidth(300);
