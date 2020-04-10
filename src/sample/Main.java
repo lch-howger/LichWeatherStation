@@ -36,10 +36,19 @@ public class Main extends Application {
     private String selectedStation;
     private Stage stage;
 
+    /**
+     * main function
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * start
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
@@ -85,6 +94,7 @@ public class Main extends Application {
     }
 
     /**
+     * initialize data
      * @return
      */
     private void initData() {
@@ -195,7 +205,7 @@ public class Main extends Application {
     }
 
     /**
-     *
+     * create report and export
      */
     private void handleReport() {
         DirectoryChooser directoryChooser = new DirectoryChooser();

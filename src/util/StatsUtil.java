@@ -89,6 +89,11 @@ public class StatsUtil {
         return a;
     }
 
+    /**
+     * get statistics report
+     * @param list
+     * @return
+     */
     public static String getStatsReport(List<Station> list) {
         if (ListUtil.isEmpty(list)) {
             return "";

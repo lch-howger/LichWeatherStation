@@ -12,6 +12,11 @@ import java.io.File;
 
 public class MenuFactory {
 
+    /**
+     * create menu
+     * @param s
+     * @return
+     */
     public static Menu createMenu(String s) {
         Menu menu = new Menu(s);
         if (s.equals("File")) {
@@ -29,6 +34,11 @@ public class MenuFactory {
         return menu;
     }
 
+    /**
+     * create menu item
+     * @param s
+     * @return
+     */
     public static MenuItem createMenuItem(String s) {
         MenuItem menuItem = new MenuItem(s);
         if (s.equals("Generate Report")) {

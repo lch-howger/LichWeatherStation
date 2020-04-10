@@ -7,6 +7,10 @@ import util.TableUtil;
 
 public class TableFactory {
 
+    /**
+     * create table
+     * @return
+     */
     public static TableView createTable() {
 
         //create columns
